@@ -651,7 +651,8 @@
         // Audio elements
         const loginAudio = new Audio('login.mp3');
         const sendAudio = new Audio('send.mp3');
-        const emAudio = new Audio('em.mp3');
+        const lowBassAudio = new Audio('572.mp3');
+        const highBassAudio = new Audio('648.mp3');
 
         // Initialize
         function init() {
@@ -1106,13 +1107,16 @@
             document.getElementById('easExpiration').textContent = `${expiration} minutes from now`;
 
             document.getElementById('easEmulator').classList.add('active');
-            emAudio.play().catch(() => {});
+            lowBassAudio.play().catch(() => {});
+            highBassAudio.play().catch(() => {});
         }
 
         function closeEAS() {
             document.getElementById('easEmulator').classList.remove('active');
-            emAudio.pause();
-            emAudio.currentTime = 0;
+            lowBassAudio.pause();
+            lowBassAudio.currentTime = 0;
+            highBassAudio.pause();
+            highBassAudio.currentTime = 0;
         }
 
         function clearForm() {
