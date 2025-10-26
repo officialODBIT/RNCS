@@ -36,6 +36,7 @@
             display: flex;
             align-items: center;
             padding: 0 4px;
+            z-index: 1000;
         }
 
         .start-button {
@@ -57,6 +58,71 @@
             border-style: inset;
         }
 
+        .start-menu {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 200px;
+            background: #ECE9D8;
+            border: 2px outset #fff;
+            display: none;
+            z-index: 999;
+        }
+
+        .start-menu.active {
+            display: block;
+        }
+
+        .start-menu-header {
+            background: linear-gradient(to right, #0058E6 0%, #3C98F7 100%);
+            color: white;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .start-menu-item {
+            padding: 6px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .start-menu-item:hover {
+            background: #316AC5;
+            color: white;
+        }
+
+        .start-menu-separator {
+            height: 1px;
+            background: #808080;
+            margin: 4px 0;
+        }
+
+        .taskbar-items {
+            display: flex;
+            gap: 4px;
+            margin-left: 8px;
+        }
+
+        .taskbar-item {
+            height: 24px;
+            background: linear-gradient(to bottom, #ECE9D8 0%, #C9C4B8 100%);
+            border: 1px outset #fff;
+            padding: 0 8px;
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .taskbar-item.active {
+            border-style: inset;
+            background: linear-gradient(to bottom, #C9C4B8 0%, #ECE9D8 100%);
+        }
+
         .window {
             position: absolute;
             background: #ECE9D8;
@@ -64,6 +130,7 @@
             box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
             min-width: 300px;
             display: none;
+            z-index: 100;
         }
 
         .window.active {
@@ -78,6 +145,10 @@
             padding: 0 4px;
             cursor: move;
             user-select: none;
+        }
+
+        .window.inactive .window-titlebar {
+            background: linear-gradient(to right, #7A96DF 0%, #A0B8E8 100%);
         }
 
         .window-title {
@@ -276,52 +347,72 @@
             min-height: 60px;
         }
 
-        .alert-preview {
+        .eas-emulator {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 600px;
+            width: 800px;
+            height: 600px;
             background: #000;
-            color: #FFF;
-            padding: 20px;
-            border: 3px solid #FF0000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            border: 3px solid #333;
             z-index: 10000;
             display: none;
         }
 
-        .alert-preview.active {
+        .eas-emulator.active {
             display: block;
         }
 
-        .alert-preview-header {
-            background: #FF0000;
+        .eas-header {
+            background: #000;
             color: #FFF;
-            padding: 10px;
-            font-weight: bold;
-            font-size: 16px;
+            padding: 20px;
             text-align: center;
-            margin: -20px -20px 20px -20px;
+            font-family: "Courier New", monospace;
+            border-bottom: 4px solid #FF0000;
         }
 
-        .alert-preview-content {
-            font-size: 14px;
-            line-height: 1.6;
+        .eas-attention {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
         }
 
-        .alert-preview-field {
-            margin-bottom: 12px;
+        .eas-bars {
+            height: 80px;
+            background: linear-gradient(to right, 
+                #FFF 0%, #FFF 14.28%, 
+                #FF0 14.28%, #FF0 28.56%,
+                #0FF 28.56%, #0FF 42.84%,
+                #0F0 42.84%, #0F0 57.12%,
+                #F0F 57.12%, #F0F 71.4%,
+                #F00 71.4%, #F00 85.68%,
+                #00F 85.68%, #00F 100%);
+            margin: 20px 0;
         }
 
-        .alert-preview-label {
+        .eas-content {
+            color: #FFF;
+            padding: 30px;
+            font-size: 18px;
+            line-height: 1.8;
+            font-family: "Courier New", monospace;
+        }
+
+        .eas-field {
+            margin-bottom: 16px;
+        }
+
+        .eas-label {
             color: #FFD700;
             font-weight: bold;
         }
 
-        .alert-preview-close {
-            margin-top: 20px;
+        .eas-close {
             text-align: center;
+            padding: 20px;
         }
 
         .checkbox-group {
@@ -339,20 +430,90 @@
             display: flex;
             justify-content: space-between;
         }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        .history-table th,
+        .history-table td {
+            border: 1px solid #808080;
+            padding: 6px;
+            text-align: left;
+        }
+
+        .history-table th {
+            background: #D4D0C8;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background: #F0F0F0;
+        }
+
+        .template-item {
+            background: #ECE9D8;
+            border: 1px outset #fff;
+            padding: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .template-item:active {
+            border-style: inset;
+        }
+
+        .template-name {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-online {
+            background: #00FF00;
+        }
+
+        .settings-section {
+            margin-bottom: 20px;
+        }
+
+        .settings-section h3 {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #000080;
+        }
     </style>
 </head>
 <body>
     <div class="desktop" id="desktop"></div>
     
     <div class="taskbar">
-        <div class="start-button">
+        <div class="start-button" onclick="toggleStartMenu()">
             <span style="font-size: 14px;">⊞</span>
             <span>Start</span>
         </div>
+        <div class="taskbar-items" id="taskbarItems"></div>
+    </div>
+
+    <div class="start-menu" id="startMenu">
+        <div class="start-menu-header">Windows XP</div>
+        <div class="start-menu-item" onclick="openMainWindow()">RNCS Control Panel</div>
+        <div class="start-menu-separator"></div>
+        <div class="start-menu-item" onclick="shutdown()">Shut Down</div>
     </div>
 
     <!-- Login Window -->
-    <div class="window active" id="loginWindow" style="width: 340px; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div class="window active" id="loginWindow" style="width: 340px; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999;">
         <div class="window-titlebar">
             <span class="window-title">RNCS System Login</span>
             <div class="window-controls">
@@ -383,7 +544,7 @@
     </div>
 
     <!-- Loading Window -->
-    <div class="window" id="loadingWindow" style="width: 300px; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div class="window" id="loadingWindow" style="width: 300px; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999;">
         <div class="window-titlebar">
             <span class="window-title">RNCS System</span>
         </div>
@@ -392,12 +553,28 @@
         </div>
     </div>
 
+    <!-- Error Dialog -->
+    <div class="window" id="errorDialog" style="width: 320px; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+        <div class="window-titlebar">
+            <span class="window-title">RNCS System</span>
+        </div>
+        <div class="window-content">
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                <div style="font-size: 32px; color: #CC0000;">⚠</div>
+                <div id="errorMessage" style="font-size: 11px; padding-top: 8px;"></div>
+            </div>
+            <div class="button-group">
+                <button class="button" onclick="closeErrorDialog()">OK</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Main RNCS Window -->
     <div class="window" id="mainWindow" style="width: 900px; height: 600px; top: 50px; left: 50px;">
         <div class="window-titlebar" data-window="mainWindow">
             <span class="window-title">RNCS Emergency Alert System - Control Panel</span>
             <div class="window-controls">
-                <div class="window-button">_</div>
+                <div class="window-button" onclick="minimizeWindow('mainWindow')">_</div>
                 <div class="window-button">□</div>
                 <div class="window-button" onclick="closeWindow('mainWindow')">×</div>
             </div>
@@ -417,95 +594,7 @@
                         <div class="sidebar-item" onclick="showPanel('status')">System Status</div>
                     </div>
                 </div>
-                <div class="main-panel" id="mainPanel">
-                    <div id="alertsPanel">
-                        <div class="panel-title">Create Emergency Alert</div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="font-size: 11px; font-weight: bold; display: block; margin-bottom: 8px;">Select Alert Type:</label>
-                            <div class="alert-type-grid">
-                                <div class="alert-type-card" onclick="selectAlertType('civil-danger')">
-                                    <div class="alert-type-name" style="color: #CC0000;">⚠️ Civil Danger</div>
-                                    <div class="alert-type-desc">Immediate threat to public safety</div>
-                                </div>
-                                <div class="alert-type-card" onclick="selectAlertType('severe-weather')">
-                                    <div class="alert-type-name" style="color: #FF6600;">🌪️ Severe Weather</div>
-                                    <div class="alert-type-desc">Dangerous weather conditions</div>
-                                </div>
-                                <div class="alert-type-card" onclick="selectAlertType('evacuation')">
-                                    <div class="alert-type-name" style="color: #9900CC;">🚨 Evacuation Order</div>
-                                    <div class="alert-type-desc">Mandatory evacuation required</div>
-                                </div>
-                                <div class="alert-type-card" onclick="selectAlertType('amber-alert')">
-                                    <div class="alert-type-name" style="color: #FF9900;">👶 AMBER Alert</div>
-                                    <div class="alert-type-desc">Child abduction emergency</div>
-                                </div>
-                                <div class="alert-type-card" onclick="selectAlertType('hazmat')">
-                                    <div class="alert-type-name" style="color: #006600;">☢️ HAZMAT Incident</div>
-                                    <div class="alert-type-desc">Hazardous materials release</div>
-                                </div>
-                                <div class="alert-type-card" onclick="selectAlertType('public-safety')">
-                                    <div class="alert-type-name" style="color: #0066CC;">🔵 Public Safety</div>
-                                    <div class="alert-type-desc">General safety notification</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="alertForm" style="display: none;">
-                            <div class="form-field">
-                                <label>Alert Title:</label>
-                                <input type="text" id="alertTitle" placeholder="Enter alert title">
-                            </div>
-                            
-                            <div class="form-field">
-                                <label>Alert Message:</label>
-                                <textarea id="alertMessage" placeholder="Enter detailed alert message"></textarea>
-                            </div>
-                            
-                            <div class="form-field">
-                                <label>Affected Areas:</label>
-                                <input type="text" id="affectedAreas" placeholder="e.g., Downtown District, County Zone 3">
-                            </div>
-                            
-                            <div class="form-field">
-                                <label>Severity Level:</label>
-                                <select id="severityLevel">
-                                    <option value="extreme">Extreme - Immediate threat to life</option>
-                                    <option value="severe">Severe - Significant threat</option>
-                                    <option value="moderate">Moderate - Possible threat</option>
-                                    <option value="minor">Minor - Minimal threat</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-field">
-                                <label>Expiration Time:</label>
-                                <select id="expirationTime">
-                                    <option value="15">15 minutes</option>
-                                    <option value="30">30 minutes</option>
-                                    <option value="60">1 hour</option>
-                                    <option value="120">2 hours</option>
-                                    <option value="360">6 hours</option>
-                                    <option value="720">12 hours</option>
-                                </select>
-                            </div>
-                            
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="audioAlert" checked>
-                                <label for="audioAlert">Include audio tone alert</label>
-                            </div>
-                            
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="smsAlert" checked>
-                                <label for="smsAlert">Send SMS to mobile devices</label>
-                            </div>
-                            
-                            <div class="button-group" style="margin-top: 16px;">
-                                <button class="button" onclick="previewAlert()" style="background: #3DAF3D; color: white; font-weight: bold;">Preview Alert</button>
-                                <button class="button" onclick="clearForm()">Clear Form</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="main-panel" id="mainPanel"></div>
             </div>
             <div class="status-bar">
                 <span>RNCS v2.3.1 | User: ADMIN | System Status: Online</span>
@@ -514,39 +603,40 @@
         </div>
     </div>
 
-    <!-- Alert Preview Window -->
-    <div class="alert-preview" id="alertPreview">
-        <div class="alert-preview-header" id="previewHeader">
-            ⚠️ EMERGENCY ALERT ⚠️
+    <!-- EAS Emulator -->
+    <div class="eas-emulator" id="easEmulator">
+        <div class="eas-header">
+            <div class="eas-attention">EMERGENCY ALERT SYSTEM</div>
         </div>
-        <div class="alert-preview-content">
-            <div class="alert-preview-field">
-                <span class="alert-preview-label">ALERT TYPE:</span>
-                <span id="previewType"></span>
+        <div class="eas-bars"></div>
+        <div class="eas-content">
+            <div class="eas-field">
+                <span class="eas-label">ALERT TYPE:</span>
+                <span id="easType"></span>
             </div>
-            <div class="alert-preview-field">
-                <span class="alert-preview-label">SEVERITY:</span>
-                <span id="previewSeverity"></span>
+            <div class="eas-field">
+                <span class="eas-label">SEVERITY:</span>
+                <span id="easSeverity"></span>
             </div>
-            <div class="alert-preview-field">
-                <span class="alert-preview-label">TITLE:</span>
-                <div id="previewTitle" style="margin-top: 4px;"></div>
+            <div class="eas-field">
+                <span class="eas-label">TITLE:</span>
+                <div id="easTitle" style="margin-top: 8px;"></div>
             </div>
-            <div class="alert-preview-field">
-                <span class="alert-preview-label">MESSAGE:</span>
-                <div id="previewMessage" style="margin-top: 4px;"></div>
+            <div class="eas-field">
+                <span class="eas-label">MESSAGE:</span>
+                <div id="easMessage" style="margin-top: 8px;"></div>
             </div>
-            <div class="alert-preview-field">
-                <span class="alert-preview-label">AFFECTED AREAS:</span>
-                <span id="previewAreas"></span>
+            <div class="eas-field">
+                <span class="eas-label">AFFECTED AREAS:</span>
+                <span id="easAreas"></span>
             </div>
-            <div class="alert-preview-field">
-                <span class="alert-preview-label">EXPIRES:</span>
-                <span id="previewExpiration"></span>
+            <div class="eas-field">
+                <span class="eas-label">EXPIRES:</span>
+                <span id="easExpiration"></span>
             </div>
         </div>
-        <div class="alert-preview-close">
-            <button class="button" onclick="closePreview()" style="background: #CC0000; color: white; font-weight: bold;">Close Preview</button>
+        <div class="eas-close">
+            <button class="button" onclick="closeEAS()" style="background: #CC0000; color: white; font-weight: bold;">Close</button>
         </div>
     </div>
 
@@ -555,14 +645,29 @@
         let isDragging = false;
         let currentWindow = null;
         let offset = { x: 0, y: 0 };
+        let isLoggedIn = false;
+        let alertHistory = [];
+
+        // Audio elements
+        const loginAudio = new Audio('login.mp3');
+        const sendAudio = new Audio('send.mp3');
+        const emAudio = new Audio('em.mp3');
+
+        // Initialize
+        function init() {
+            updateTime();
+            setInterval(updateTime, 1000);
+            showPanel('alerts');
+        }
 
         // Update time
         function updateTime() {
             const now = new Date();
-            document.getElementById('statusTime').textContent = now.toLocaleTimeString();
+            const timeEl = document.getElementById('statusTime');
+            if (timeEl) {
+                timeEl.textContent = now.toLocaleTimeString();
+            }
         }
-        setInterval(updateTime, 1000);
-        updateTime();
 
         // Login function
         function login() {
@@ -570,26 +675,372 @@
             const password = document.getElementById('password').value;
 
             if (username === 'ADMIN' && password === '1234') {
+                loginAudio.play().catch(() => {});
                 document.getElementById('loginWindow').classList.remove('active');
                 document.getElementById('loadingWindow').classList.add('active');
 
                 setTimeout(() => {
                     document.getElementById('loadingWindow').classList.remove('active');
                     document.getElementById('mainWindow').classList.add('active');
+                    isLoggedIn = true;
+                    updateTaskbar();
                 }, 2500);
             } else {
-                alert('Invalid username or password!');
+                showError('Invalid username or password!');
             }
         }
 
-        // Allow Enter key to login
         document.getElementById('password').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 login();
             }
         });
 
-        // Select alert type
+        // Error dialog
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorDialog').classList.add('active');
+        }
+
+        function closeErrorDialog() {
+            document.getElementById('errorDialog').classList.remove('active');
+        }
+
+        // Start menu
+        function toggleStartMenu() {
+            const menu = document.getElementById('startMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('startMenu');
+            const startBtn = document.querySelector('.start-button');
+            if (!menu.contains(e.target) && !startBtn.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        function openMainWindow() {
+            if (!isLoggedIn) return;
+            document.getElementById('mainWindow').classList.add('active');
+            updateTaskbar();
+            toggleStartMenu();
+        }
+
+        function shutdown() {
+            if (confirm('Are you sure you want to shut down?')) {
+                document.body.style.background = '#000';
+                document.querySelector('.desktop').style.display = 'none';
+                document.querySelector('.taskbar').style.display = 'none';
+                document.getElementById('startMenu').style.display = 'none';
+                document.querySelectorAll('.window').forEach(w => w.style.display = 'none');
+            }
+        }
+
+        // Taskbar management
+        function updateTaskbar() {
+            const taskbarItems = document.getElementById('taskbarItems');
+            taskbarItems.innerHTML = '';
+            
+            if (document.getElementById('mainWindow').classList.contains('active')) {
+                const item = document.createElement('div');
+                item.className = 'taskbar-item active';
+                item.textContent = 'RNCS Control Panel';
+                item.onclick = () => restoreWindow('mainWindow');
+                taskbarItems.appendChild(item);
+            }
+        }
+
+        function minimizeWindow(windowId) {
+            document.getElementById(windowId).classList.remove('active');
+            updateTaskbar();
+        }
+
+        function restoreWindow(windowId) {
+            document.getElementById(windowId).classList.add('active');
+        }
+
+        function closeWindow(windowId) {
+            document.getElementById(windowId).classList.remove('active');
+            updateTaskbar();
+        }
+
+        // Panel management
+        function showPanel(panel) {
+            const items = document.querySelectorAll('.sidebar-item');
+            items.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const mainPanel = document.getElementById('mainPanel');
+            
+            switch(panel) {
+                case 'alerts':
+                    mainPanel.innerHTML = getAlertsPanel();
+                    break;
+                case 'history':
+                    mainPanel.innerHTML = getHistoryPanel();
+                    break;
+                case 'templates':
+                    mainPanel.innerHTML = getTemplatesPanel();
+                    break;
+                case 'settings':
+                    mainPanel.innerHTML = getSettingsPanel();
+                    break;
+                case 'status':
+                    mainPanel.innerHTML = getStatusPanel();
+                    break;
+            }
+        }
+
+        function getAlertsPanel() {
+            return `
+                <div class="panel-title">Create Emergency Alert</div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 11px; font-weight: bold; display: block; margin-bottom: 8px;">Select Alert Type:</label>
+                    <div class="alert-type-grid">
+                        <div class="alert-type-card" onclick="selectAlertType('civil-danger')">
+                            <div class="alert-type-name" style="color: #CC0000;">Civil Danger Warning</div>
+                            <div class="alert-type-desc">Immediate threat to public safety</div>
+                        </div>
+                        <div class="alert-type-card" onclick="selectAlertType('severe-weather')">
+                            <div class="alert-type-name" style="color: #FF6600;">Severe Weather Alert</div>
+                            <div class="alert-type-desc">Dangerous weather conditions</div>
+                        </div>
+                        <div class="alert-type-card" onclick="selectAlertType('evacuation')">
+                            <div class="alert-type-name" style="color: #9900CC;">Evacuation Order</div>
+                            <div class="alert-type-desc">Mandatory evacuation required</div>
+                        </div>
+                        <div class="alert-type-card" onclick="selectAlertType('amber-alert')">
+                            <div class="alert-type-name" style="color: #FF9900;">AMBER Alert</div>
+                            <div class="alert-type-desc">Child abduction emergency</div>
+                        </div>
+                        <div class="alert-type-card" onclick="selectAlertType('hazmat')">
+                            <div class="alert-type-name" style="color: #006600;">HAZMAT Incident</div>
+                            <div class="alert-type-desc">Hazardous materials release</div>
+                        </div>
+                        <div class="alert-type-card" onclick="selectAlertType('public-safety')">
+                            <div class="alert-type-name" style="color: #0066CC;">Public Safety Notification</div>
+                            <div class="alert-type-desc">General safety notification</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="alertForm" style="display: none;">
+                    <div class="form-field">
+                        <label>Alert Title:</label>
+                        <input type="text" id="alertTitle" placeholder="Enter alert title">
+                    </div>
+                    
+                    <div class="form-field">
+                        <label>Alert Message:</label>
+                        <textarea id="alertMessage" placeholder="Enter detailed alert message"></textarea>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label>Affected Areas:</label>
+                        <input type="text" id="affectedAreas" placeholder="e.g., Downtown District, County Zone 3">
+                    </div>
+                    
+                    <div class="form-field">
+                        <label>Severity Level:</label>
+                        <select id="severityLevel">
+                            <option value="extreme">Extreme - Immediate threat to life</option>
+                            <option value="severe">Severe - Significant threat</option>
+                            <option value="moderate">Moderate - Possible threat</option>
+                            <option value="minor">Minor - Minimal threat</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label>Expiration Time:</label>
+                        <select id="expirationTime">
+                            <option value="15">15 minutes</option>
+                            <option value="30">30 minutes</option>
+                            <option value="60">1 hour</option>
+                            <option value="120">2 hours</option>
+                            <option value="360">6 hours</option>
+                            <option value="720">12 hours</option>
+                        </select>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="audioAlert" checked>
+                        <label for="audioAlert">Include audio tone alert</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="smsAlert" checked>
+                        <label for="smsAlert">Send SMS to mobile devices</label>
+                    </div>
+                    
+                    <div class="button-group" style="margin-top: 16px;">
+                        <button class="button" onclick="sendAlert()" style="background: #CC0000; color: white; font-weight: bold;">Send Alert</button>
+                        <button class="button" onclick="clearForm()">Clear Form</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getHistoryPanel() {
+            let html = '<div class="panel-title">Alert History</div>';
+            
+            if (alertHistory.length === 0) {
+                html += '<div style="font-size: 11px; color: #666;">No alerts sent yet.</div>';
+            } else {
+                html += `
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Title</th>
+                                <th>Severity</th>
+                                <th>Areas</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                
+                alertHistory.forEach(alert => {
+                    html += `
+                        <tr>
+                            <td>${alert.time}</td>
+                            <td>${alert.type}</td>
+                            <td>${alert.title}</td>
+                            <td>${alert.severity}</td>
+                            <td>${alert.areas}</td>
+                        </tr>`;
+                });
+                
+                html += `
+                        </tbody>
+                    </table>`;
+            }
+            
+            return html;
+        }
+
+        function getTemplatesPanel() {
+            return `
+                <div class="panel-title">Alert Templates</div>
+                
+                <div class="template-item" onclick="loadTemplate('tornado')">
+                    <div class="template-name">Tornado Warning</div>
+                    <div style="font-size: 10px; color: #666;">Pre-configured severe weather alert for tornado events</div>
+                </div>
+                
+                <div class="template-item" onclick="loadTemplate('flood')">
+                    <div class="template-name">Flash Flood Warning</div>
+                    <div style="font-size: 10px; color: #666;">Rapid onset flooding emergency template</div>
+                </div>
+                
+                <div class="template-item" onclick="loadTemplate('shelter')">
+                    <div class="template-name">Shelter in Place</div>
+                    <div style="font-size: 10px; color: #666;">General shelter-in-place order template</div>
+                </div>
+                
+                <div class="template-item" onclick="loadTemplate('test')">
+                    <div class="template-name">System Test</div>
+                    <div style="font-size: 10px; color: #666;">Routine system test alert</div>
+                </div>
+            `;
+        }
+
+        function getSettingsPanel() {
+            return `
+                <div class="panel-title">System Settings</div>
+                
+                <div class="settings-section">
+                    <h3>Broadcast Settings</h3>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="settingTV" checked>
+                        <label for="settingTV">Enable TV broadcast</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="settingRadio" checked>
+                        <label for="settingRadio">Enable radio broadcast</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="settingSMS" checked>
+                        <label for="settingSMS">Enable SMS alerts</label>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>Default Configuration</h3>
+                    <div class="form-field">
+                        <label>Default expiration time:</label>
+                        <select>
+                            <option value="30">30 minutes</option>
+                            <option value="60" selected>1 hour</option>
+                            <option value="120">2 hours</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>Coverage Area</h3>
+                    <div class="form-field">
+                        <label>Primary region:</label>
+                        <input type="text" value="Metropolitan Area" disabled>
+                    </div>
+                    <div class="form-field">
+                        <label>Coverage radius:</label>
+                        <input type="text" value="50 miles" disabled>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="button">Apply</button>
+                    <button class="button">Reset to Defaults</button>
+                </div>
+            `;
+        }
+
+        function getStatusPanel() {
+            return `
+                <div class="panel-title">System Status</div>
+                
+                <div class="settings-section">
+                    <h3>Connection Status</h3>
+                    <div style="font-size: 11px; margin-bottom: 8px;">
+                        <span class="status-indicator status-online"></span>
+                        <strong>Primary Server:</strong> Connected
+                    </div>
+                    <div style="font-size: 11px; margin-bottom: 8px;">
+                        <span class="status-indicator status-online"></span>
+                        <strong>Backup Server:</strong> Connected
+                    </div>
+                    <div style="font-size: 11px; margin-bottom: 8px;">
+                        <span class="status-indicator status-online"></span>
+                        <strong>Broadcast Network:</strong> Online
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>System Information</h3>
+                    <div style="font-size: 11px; margin-bottom: 4px;"><strong>Version:</strong> RNCS 2.3.1</div>
+                    <div style="font-size: 11px; margin-bottom: 4px;"><strong>Uptime:</strong> 45 days, 12 hours</div>
+                    <div style="font-size: 11px; margin-bottom: 4px;"><strong>Last Test:</strong> October 20, 2025</div>
+                    <div style="font-size: 11px; margin-bottom: 4px;"><strong>Alerts Sent (30d):</strong> ${alertHistory.length}</div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>Coverage Statistics</h3>
+                    <div style="font-size: 11px; margin-bottom: 4px;"><strong>Active Recipients:</strong> 2,547,893</div>
+                    <div style="font-size: 11px; margin-bottom: 4px;"><strong>TV Stations:</strong> 12 connected</div>
+                    <div style="font-size: 11px; margin-bottom: 4px;"><strong>Radio Stations:</strong> 28 connected</div>
+                    <div style="font-size: 11px; margin-bottom: 4px;"><strong>Mobile Carriers:</strong> 4 connected</div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="button">Run System Test</button>
+                    <button class="button">View Logs</button>
+                </div>
+            `;
+        }
+
+        // Alert type selection
         function selectAlertType(type) {
             currentAlertType = type;
             document.getElementById('alertForm').style.display = 'block';
@@ -606,8 +1057,8 @@
             document.getElementById('alertTitle').value = titles[type] || '';
         }
 
-        // Preview alert
-        function previewAlert() {
+        // Send alert
+        function sendAlert() {
             const title = document.getElementById('alertTitle').value;
             const message = document.getElementById('alertMessage').value;
             const areas = document.getElementById('affectedAreas').value;
@@ -615,10 +1066,29 @@
             const expiration = document.getElementById('expirationTime').value;
 
             if (!title || !message || !areas) {
-                alert('Please fill in all required fields!');
+                showError('You need to fill every field.');
                 return;
             }
 
+            sendAudio.play().catch(() => {});
+
+            // Add to history
+            const now = new Date();
+            alertHistory.push({
+                time: now.toLocaleTimeString(),
+                type: currentAlertType.replace('-', ' ').toUpperCase(),
+                title: title,
+                severity: severity.toUpperCase(),
+                areas: areas
+            });
+
+            // Show EAS emulator
+            setTimeout(() => {
+                showEAS(title, message, areas, severity, expiration);
+            }, 500);
+        }
+
+        function showEAS(title, message, areas, severity, expiration) {
             const typeNames = {
                 'civil-danger': 'CIVIL DANGER WARNING',
                 'severe-weather': 'SEVERE WEATHER ALERT',
@@ -628,18 +1098,21 @@
                 'public-safety': 'PUBLIC SAFETY NOTIFICATION'
             };
 
-            document.getElementById('previewType').textContent = typeNames[currentAlertType];
-            document.getElementById('previewSeverity').textContent = severity.toUpperCase();
-            document.getElementById('previewTitle').textContent = title;
-            document.getElementById('previewMessage').textContent = message;
-            document.getElementById('previewAreas').textContent = areas;
-            document.getElementById('previewExpiration').textContent = `${expiration} minutes from now`;
+            document.getElementById('easType').textContent = typeNames[currentAlertType];
+            document.getElementById('easSeverity').textContent = severity.toUpperCase();
+            document.getElementById('easTitle').textContent = title;
+            document.getElementById('easMessage').textContent = message;
+            document.getElementById('easAreas').textContent = areas;
+            document.getElementById('easExpiration').textContent = `${expiration} minutes from now`;
 
-            document.getElementById('alertPreview').classList.add('active');
+            document.getElementById('easEmulator').classList.add('active');
+            emAudio.play().catch(() => {});
         }
 
-        function closePreview() {
-            document.getElementById('alertPreview').classList.remove('active');
+        function closeEAS() {
+            document.getElementById('easEmulator').classList.remove('active');
+            emAudio.pause();
+            emAudio.currentTime = 0;
         }
 
         function clearForm() {
@@ -649,37 +1122,59 @@
             document.getElementById('alertForm').style.display = 'none';
         }
 
-        function closeWindow(windowId) {
-            document.getElementById(windowId).classList.remove('active');
-        }
-
-        function showPanel(panel) {
-            const items = document.querySelectorAll('.sidebar-item');
-            items.forEach(item => item.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (panel !== 'alerts') {
-                document.getElementById('mainPanel').innerHTML = `
-                    <div class="panel-title">${panel.charAt(0).toUpperCase() + panel.slice(1)}</div>
-                    <div style="font-size: 11px; color: #666;">This section is part of the demo interface.</div>
-                `;
-            } else {
-                location.reload();
+        function loadTemplate(template) {
+            showPanel('alerts');
+            document.querySelectorAll('.sidebar-item')[0].classList.add('active');
+            
+            const templates = {
+                'tornado': {
+                    type: 'severe-weather',
+                    title: 'Tornado Warning',
+                    message: 'A tornado warning has been issued for your area. Seek shelter immediately in a basement or interior room on the lowest floor. Stay away from windows.',
+                    areas: 'Central County, Eastern District'
+                },
+                'flood': {
+                    type: 'severe-weather',
+                    title: 'Flash Flood Warning',
+                    message: 'Flash flooding is occurring or imminent. Move to higher ground immediately. Do not attempt to drive through flooded areas.',
+                    areas: 'River Valley, Low-lying Areas'
+                },
+                'shelter': {
+                    type: 'civil-danger',
+                    title: 'Shelter in Place Order',
+                    message: 'Authorities have issued a shelter-in-place order. Remain indoors, close all windows and doors, and await further instructions.',
+                    areas: 'City-wide'
+                },
+                'test': {
+                    type: 'public-safety',
+                    title: 'System Test',
+                    message: 'This is a test of the Regional Network Communication System. This is only a test. No action is required.',
+                    areas: 'All Coverage Areas'
+                }
+            };
+            
+            const t = templates[template];
+            if (t) {
+                setTimeout(() => {
+                    selectAlertType(t.type);
+                    document.getElementById('alertTitle').value = t.title;
+                    document.getElementById('alertMessage').value = t.message;
+                    document.getElementById('affectedAreas').value = t.areas;
+                }, 100);
             }
         }
 
         // Window dragging
-        document.querySelectorAll('.window-titlebar').forEach(titlebar => {
-            titlebar.addEventListener('mousedown', function(e) {
-                if (e.target.classList.contains('window-button')) return;
-                
-                isDragging = true;
-                currentWindow = this.closest('.window');
-                const rect = currentWindow.getBoundingClientRect();
-                offset.x = e.clientX - rect.left;
-                offset.y = e.clientY - rect.top;
-                currentWindow.style.transform = 'none';
-            });
+        document.addEventListener('mousedown', function(e) {
+            const titlebar = e.target.closest('.window-titlebar');
+            if (!titlebar || e.target.classList.contains('window-button')) return;
+            
+            isDragging = true;
+            currentWindow = titlebar.closest('.window');
+            const rect = currentWindow.getBoundingClientRect();
+            offset.x = e.clientX - rect.left;
+            offset.y = e.clientY - rect.top;
+            currentWindow.style.transform = 'none';
         });
 
         document.addEventListener('mousemove', function(e) {
@@ -695,6 +1190,9 @@
             isDragging = false;
             currentWindow = null;
         });
+
+        // Initialize on load
+        init();
     </script>
 </body>
 </html>
